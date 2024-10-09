@@ -14,7 +14,7 @@ After installing both Node.js and Yarn, navigate into the directory of the proje
 ## Configuration
 In order to configure the gateway, create a `config.json` file at the root of the projects directory (where you run `yarn run serve`). This file contains the following properties (alongside their default values):
 
-```json
+```jsonc
 {
     "port": 8080, // determines the port the gateway should run on
     "logNewRequests": true, // if true, will log each cache miss
