@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- Error 400. The provided URL is not valid without a Referer HTTP header. -->
+
+<html>
+
+<head>
+    <title>wayback-gateway error 400</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        body {
+            margin: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <font face="MS Sans Serif, Arial">
+        <h1>Error 400.</h1>
+        <p>
+            The provided URL is not valid without a <code>Referer</code> HTTP header.
+            If you wish to navigate to an archived version of a webpage, please be sure
+            to input its URL after the hostname, <b>with</b> the <code>http://</code> or
+            <code>https://</code> prefix. For example, <code><%= host %>/http://google.com</code>
+            is a valid URL.
+        </p>
+    
+        <p><a href="<%= host %>">(homepage)</a></p>
+    </font>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>wayback-gateway configuration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <style>
+        body {
+            margin: 32px;
+        }
+
+        .indent {
+            margin-left: 16px;
+            display: inline-block;
+        }
+
+        code {
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <font face="MS Sans Serif, Arial">
+        <h1>wayback-gateway configuration</h1>
+        <p>
+            <a href="http://github.com/ascpixi/wayback-gateway">wayback-gateway</a> is
+            a simple gateway for the Internet Archive Wayback Machine, which returns raw webpages
+            (omitting the Wayback Machine interface). Anything appended after <code><%= host %></code>
+            beginning with <code>http://</code> or <code>https://</code> will be automatically
+            fetched from the Wayback Machine.
+        </p>
+
+        <p>You can configure wayback-gateway for your web client below.</p>
+
+        <form action="<%= `${host}/configure` %>" method="post">
+            <%# We do this instead of <input type="date"> for ancient browsers that don't support it %>
+            
+            <span><b>Target date: </b></span>
+            <select name="targetDay">
+                <% for (let i = 1; i <= 31; i++) { %>
+                    <option <%= config.targetDate.day == i ? "selected" : "" %>  value="<%= i %>"><%= i %></option>
+                <% } %>
+            </select>
+
+            <select name="targetMonth">
+                <% for (let i = 1; i <= 12; i++) { %>
+                    <option <%= config.targetDate.month == i ? "selected" : "" %>  value="<%= i %>"><%= i %></option>
+                <% } %>
+            </select>
+
+            <select name="targetYear">
+                <% for (let i = 1996; i <= new Date().getFullYear(); i++) { %>
+                    <option <%= config.targetDate.year == i ? "selected" : "" %> value="<%= i %>"><%= i %></option>
+                <% } %>
+            </select>
+
+            <br>
+            <span class="indent"><i>Archives that were made closest to this date will be picked.</i></span>
+            <br><br>
+
+            <span><b>Replace absolute links: </b></span>
+            <select name="replaceAbsLinks">
+                <option value="true" <%= config.replaceAbsLinks ? "selected" : "" %>>yes</option>
+                <option value="false" <%= !config.replaceAbsLinks ? "selected" : "" %>>no</option>
+            </select>
+
+            <br>
+            <span class="indent"><i>
+                Sites often link to absolute URLs, e.g. <code>https://google.com/images</code>.
+                If left disabled, these links will be unaffected, and will point to their current state.
+                If enabled, they will be automatically pre-processed to point to the gateway. This only
+                affects HTML, CSS, and JS documents.
+            </i></span>
+
+            <br><br>
+
+            <span><b>Use current versions if no archives exist: </b></span>
+            <select name="fallbackToCurrent">
+                <option value="true" <%= config.fallbackToCurrent ? "selected" : "" %>>yes</option>
+                <option value="false" <%= !config.fallbackToCurrent ? "selected" : "" %>>no</option>
+            </select>
+
+            <br>
+            <span class="indent"><i>
+                If no archives exist on the Wayback Machine of a given resource, and this
+                option is selected, your browser will be redirected to use the current,
+                un-proxied version of said resource. Can help with broken images.
+            </i></span>
+
+            <br><br>
+
+            <span><b>Minimize HTML: </b></span>
+            <select name="minimizeHtml">
+                <option value="true" <%= config.minimizeHtml ? "selected" : "" %>>yes</option>
+                <option value="false" <%= !config.minimizeHtml ? "selected" : "" %>>no</option>
+            </select>
+
+            <br>
+            <span class="indent"><i>
+                If enabled, the gateway will minimize HTML documents before sending them
+                to the client. May speed up loading times, but may also break certain websites on
+                ancient browsers.
+            </i></span>
+
+            <br></br>
+
+            <input type="submit" value="Apply">
+        </form>
+    </font>
+</body>
+</html>
